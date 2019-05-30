@@ -31,7 +31,12 @@ public class LoginController {
 		Map<String,Object> map = new HashMap<String,Object>();
 		Iterable<UserLogin> userlogindata= usrepo.findByNameAndPassword(name,password);
 		System.out.println(userlogindata);
-		if(userlogindata != null) {
+		int flag=0;
+		/*判断是否有对象*/
+		for(UserLogin zdata: userlogindata) {
+			flag=1;
+		}
+		if(flag==1) {
 			map.put("result", true);
 		    map.put("statue", 200);
 		    map.put("msg","登陆成功");
