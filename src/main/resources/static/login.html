@@ -1,47 +1,54 @@
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-	
-    <title>Signin Template for Bootstrap</title>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
 
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+<title>Signin Template for Bootstrap</title>
 
-    <!-- Custom styles for this template -->
-    <link href="css/signin.css" rel="stylesheet">
-    <script type="text/javascript" src="js/vue.js"></script>
-    
-    <script src="js/vue.js"></script>
-    <script src="js/axios.js"></script>
-    
-    <link rel="stylesheet" type="text/css" href="css/iView.css">
-     
-    <script type="text/javascript" src="js/iView.js"></script>
-  </head>
+<!-- Bootstrap core CSS -->
+<link href="css/bootstrap.css" rel="stylesheet">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link href="css/signin.css" rel="stylesheet">
+<link href="css/M_alert.css" rel="stylesheet">
 
-  <body class="text-center">
-  	<div id="app">
-	    <form class="form-signin">
-	      <img class="mb-4" src="img/book2.jpg" alt="" width="72" height="72">
-	      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-	      <label for="inputUser" class="sr-only">User name</label>
-	      <input type="user" id="inputUser" class="form-control" placeholder="User name" v-model="user.name" required autofocus>
-	      <label for="inputPassword" class="sr-only">Password</label>
-	      <input type="password" id="inputPassword" class="form-control" placeholder="Password" v-model="user.password" required>
-	      <div class="checkbox mb-3">
-	        <label>
-	          <input type="checkbox" value="remember-me"> Remember me
-	        </label>
-	      </div>
-	      <button class="btn btn-lg btn-primary btn-block" type="button" v-on:click="UserLogin">Sign in</button>
-	      <p class="mt-5 mb-3 text-muted">&copy; 2019-2020</p>
-	    </form>
-    </div>
-  </body>
-  <script>
+<script src="js/vue.js"></script>
+<script src="js/axios.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.js"></script>
+</head>
+
+<body class="text-center">
+	<div id="app">
+		<form class="form-signin">
+			<img class="mb-4" src="img/book2.jpg" alt="" width="72" height="72">
+			<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+			<label for="inputUser" class="sr-only">User name</label> <input
+				type="user" id="inputUser" class="form-control"
+				placeholder="User name" v-model="user.name" required autofocus>
+			<label for="inputPassword" class="sr-only">Password</label> <input
+				type="password" id="inputPassword" class="form-control"
+				placeholder="Password" v-model="user.password" required>
+			<div class="checkbox mb-3">
+				<label> <input type="checkbox" value="remember-me">
+					Remember me
+				</label>
+			</div>
+			<button class="btn btn-lg btn-primary btn-block" type="button"
+				v-on:click="UserLogin">Sign in</button>
+			<p class="mt-5 mb-3 text-muted">&copy; 2019-2020</p>
+		</form>
+		<div id="myAlertWarn" class="alert alert-warning hide">
+			<a href="#" class="close" data-dismiss="alert">&times;</a> <strong>登陆失败！</strong>账号或密码错误
+		</div>
+		<div id="myAlertSuccess" class="alert alert-success hide">
+			<a href="#" class="close" data-dismiss="alert">&times;</a> <strong>登陆成功！</strong>
+		</div>
+	</div>
+</body>
+<script>
   var app = new Vue({
 		el:'#app',
 		data:{
@@ -56,14 +63,14 @@
 				let name=this.user.name;
 				let password=this.user.password;
 				axios.post('/login/user?name='+name+'&password='+password).then(res=>{
-					console.log(res)
-					if(res.status==200){
-						alert("登陆成功")
+					//console.log(res)
+					if(res.data.statue==200){
+						$('#myAlertSuccess').removeClass('hide').addClass('in')
 						/*跳转页面*/
 						window.location.href='index.html';
 					}
 					else{
-						alert("登陆失败")
+						$('#myAlertWarn').removeClass('hide').addClass('in')
 					}
 				}).catch(err=>{
 					alert(err);
