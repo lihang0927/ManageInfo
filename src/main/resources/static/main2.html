@@ -29,21 +29,22 @@
 				<el-aside width="200px"> 
 					<el-row class="tac"> 
 						<el-col> 
-							<el-menu default-active="1"
+							<el-menu default-active="student"
+							@select="handleSelect"
 							class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
 							background-color="#D3DCE6" text-color="#333"
 							active-text-color="#B3C0D1"> 
-									<el-menu-item index="1">
+									<el-menu-item index="student">
 										<i class="el-icon-menu"></i> 
 										<span slot="title">学生管理</span> 
 									</el-menu-item> 
-									<el-menu-item index="2"> 
+									<el-menu-item index="teacher"> 
 										<i class="el-icon-menu"></i> 
 										<span slot="title">教师管理</span> </el-menu-item> 
-									<el-menu-item index="3"> 
+									<el-menu-item index="class"> 
 										<i class="el-icon-document"></i> 
 										<span slot="title">课程管理</span> </el-menu-item> 
-									<el-menu-item index="4"> 
+									<el-menu-item index="teachClass"> 
 										<i class="el-icon-setting"></i>
 										<span slot="title">授课管理</span> 
 									</el-menu-item> 
@@ -66,6 +67,7 @@
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <!-- import JavaScript -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="js/stu.js"></script>
 <script>
     var componentB={
@@ -77,11 +79,14 @@
     
     new Vue({
       el: '#app',
-      data:{
-    	 who:'student'
+      data(){
+    	  return {
+    		  who:'student'
+    	  }
       },
       components:{
-    	'student':student
+    	'student':student,
+    	'teacher':componentB
       },
       methods: {
           handleOpen(key, keyPath) {
@@ -89,6 +94,13 @@
           },
           handleClose(key, keyPath) {
             console.log(key, keyPath);
+          },
+          handleSelect(key,keyPath){
+        	 /*获取 跳转的value*/
+        	  switch(keyPath['0']){
+        		  case 'student':this.who='student';break;
+        		  case 'teacher':this.who='teacher';break;
+        	  }
           }
         },
       mounted(){

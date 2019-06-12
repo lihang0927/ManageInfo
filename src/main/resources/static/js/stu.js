@@ -12,8 +12,30 @@ var student = {
 		      width="55">
 		    </el-table-column>
 		    
+		     /*学号*/
 		    <el-table-column
-		      label="入学日期"
+		      prop="ID"
+		      label="学号"
+		      width="120">
+		    </el-table-column>
+		    
+		     /*姓名*/
+		    <el-table-column
+		      prop="name"
+		      label="姓名"
+		      width="120">
+		    </el-table-column>
+		    
+		    /*性别*/
+		    <el-table-column
+		      prop="sex"
+		      label="性别"
+		      width="120">
+		    </el-table-column>
+		    
+		    /*出生日期*/
+		    <el-table-column
+		      label="出生日期"
 		      width="120"
 		      prop="date"
 		      column-key="date"
@@ -24,11 +46,13 @@ var student = {
 		      <template slot-scope="scope">{{ scope.row.date }}</template>
 		    </el-table-column>
 		    
+		    /*入学年份*/
 		    <el-table-column
-		      prop="name"
-		      label="姓名"
+		      prop="year"
+		      label="入学年份"
 		      width="120">
 		    </el-table-column>
+		    
 		    <el-table-column
 		      prop="address"
 		      label="地址"
@@ -98,5 +122,9 @@ var student = {
 		          handleDelete(index, row) {
 		            console.log(index, row);
 		        }
+		      },
+		    mounted: function(){
+		    	/*bug*/
+		    	
 		      }
 }
