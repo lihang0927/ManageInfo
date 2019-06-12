@@ -27,8 +27,13 @@ public class Student {
   
   	@Column(name="sex")
   	private String sex; //学生性别
-  
-  
+  	
+  	@Column(name="phone")
+  	private String phone; //学生电话
+  	
+  	@Column(name="address")
+  	private String address; //学生地址
+  	
   	@Column(name="birth")
   	private LocalDate birth; //学生生日
   
@@ -49,7 +54,7 @@ public class Student {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Student(Long id, String no, String name, String sex, LocalDate birth, String grade) {
+	public Student(Long id, String no, String name, String sex, LocalDate birth, String grade,String phone,String address) {
 		super();
 		this.id = id;
 		this.no = no;
@@ -57,7 +62,25 @@ public class Student {
 		this.sex = sex;
 		this.birth = birth;
 		this.grade = grade;
+		this.phone = phone;
+		this.address = address;
 	}
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 	public Major getMajor() {
 		return major;
 	}

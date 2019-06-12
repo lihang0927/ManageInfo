@@ -38,7 +38,8 @@ public class StudentController {
 			  return map;
 	    }
 	}
-	@GetMapping("/student/{no}")//根据学生学号获取一个学生的信息http://localhost:8080/student/student/512016001
+	@GetMapping("/student/{no}")
+	//根据学生学号获取一个学生的信息http://localhost:8080/student/student/512016001
 	public Map<String,Object> getCourseById(@PathVariable String no){
 		  Map<String,Object> map = new HashMap<String,Object>();
 		    try {
@@ -55,22 +56,24 @@ public class StudentController {
 	}
 	@PostMapping("/student")//添加一个学生的信息
 	public Map<String,Object> addStudent(@RequestBody Student student){
+		System.out.println(student.getNo());
 		Map<String,Object> map = new HashMap<String,Object>();
 		try {
 			Student s = studentRepo.save(student);
 			map.put("result",true);
 			map.put("student",s);
 			map.put("msg", "添加学生成功！");
+			return map;
 		}catch(Exception e) {
 			map.put("result", false);
 			map.put("msg","添加学生失败!");
 			return map;
 		}
-		return null;
 	}
 	//删除一个课程
 	@DeleteMapping("/student/{id}")
 	public Map<String,Object> delCourseById(@PathVariable Long id) {
+		System.out.println(id);
 		Map<String,Object> map = new HashMap<String,Object>();
 		try {
 			studentRepo.deleteById(id);
@@ -78,6 +81,7 @@ public class StudentController {
 			map.put("msg","成功删除了课程！");
 			return map;
 		}catch(Exception e) {
+			System.out.println(e);
 			map.put("result", false);
 			map.put("msg","删除课程失败!");
 			return map;
