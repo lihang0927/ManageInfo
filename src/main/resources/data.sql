@@ -17,8 +17,8 @@ INSERT INTO STUDENT(ID,birth,grade,name,no,sex,college_id,major_id) VALUES(3,'19
 INSERT INTO STUDENT(ID,birth,grade,name,no,sex,college_id,major_id) VALUES(4,'1998-06-30','2016','zhousiyi','512016004','Female',4,4);
 INSERT INTO TEACHER(ID,name,college_id,birth,position) VALUES(1,'刘亮',1,'1997-08-24','教授');
 INSERT INTO TEACHER(ID,name,college_id,birth,position) VALUES(2,'周思艺',2,'1998-02-16','副教授');
-INSERT INTO TEACHER(ID,name,college_id,birth,position) VALUES(3,'李航',3,'1998-10-20','性奴');
-INSERT INTO TEACHER(ID,name,college_id,birth,position) VALUES(4,'廖家俊',4,'1998-06-30','妓女');
+INSERT INTO TEACHER(ID,name,college_id,birth,position) VALUES(3,'李航',3,'1998-10-20','教授父亲');
+INSERT INTO TEACHER(ID,name,college_id,birth,position) VALUES(4,'廖家俊',4,'1998-06-30','教授叔叔');
 
 
 INSERT INTO COURSE(ID,CREDIT,NAME,COLLEGE_ID) VALUES(1,3,'JAVAEE',3);
