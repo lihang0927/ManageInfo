@@ -1,5 +1,6 @@
 var student = {
 		template : `
+		
 			<el-table
 		    ref="filterTable"
 		    :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
@@ -14,7 +15,7 @@ var student = {
 		    
 		     /*学号*/
 		    <el-table-column
-		      prop="ID"
+		      prop="id"
 		      label="学号"
 		      width="120">
 		    </el-table-column>
@@ -37,18 +38,18 @@ var student = {
 		    <el-table-column
 		      label="出生日期"
 		      width="120"
-		      prop="date"
-		      column-key="date"
+		      prop="birth"
+		      column-key="birth"
 		      :filters="filtersData"
 		      :filter-method="filterHandler"
 		      filter-placement="bottom-end"
 		      >
-		      <template slot-scope="scope">{{ scope.row.date }}</template>
+		      <template slot-scope="scope">{{ scope.row.birth }}</template>
 		    </el-table-column>
 		    
 		    /*入学年份*/
 		    <el-table-column
-		      prop="year"
+		      prop="grade"
 		      label="入学年份"
 		      width="120">
 		    </el-table-column>
@@ -78,31 +79,12 @@ var student = {
 			          @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
 			      </template>
 			  </el-table-column>
+			  <el-button type="text" @click="open"></el-button>
 		  </el-table>
 			`,
 			 data: function(){
 				 return {
-					 tableData: [{
-				          date: '2016-05-02',
-				          name: '王小虎',
-				          address: '上海市普陀区金沙江路 1518 弄',
-				          tag: '家'
-				        }, {
-				          date: '2016-05-04',
-				          name: '李宁',
-				          address: '上海市普陀区金沙江路 1517 弄',
-				          tag: '公司'
-				        }, {
-				          date: '2016-05-01',
-				          name: '王小虎',
-				          address: '上海市普陀区金沙江路 1519 弄',
-				          tag: '家'
-				        }, {
-				          date: '2016-05-03',
-				          name: '王小虎',
-				          address: '上海市普陀区金沙江路 1516 弄',
-				          tag: '公司'
-				        }],
+					 tableData: [],
 				        multipleSelection: [],
 				        search: '',
 				        filtersData:[{text: '2016-05-01', value: '2016-05-01'}, {text: '2016-05-02', value: '2016-05-02'}, {text: '2016-05-03', value: '2016-05-03'}, {text: '2016-05-04', value: '2016-05-04'}]
@@ -118,13 +100,31 @@ var student = {
 		        },
 		        handleEdit(index, row) {
 		            console.log(index, row);
+		            this.open();
 		        },
 		          handleDelete(index, row) {
 		            console.log(index, row);
+		        },
+		        open() {
+		            this.$alert('<div style="color:rebeccapurple">我是 componentC</div>', '学生信息修改', {
+		              dangerouslyUseHTMLString: true
+		            });
+		        },
+		        loadStudents(){
+		        	axios.get("/student/student").then(res=>{ //res 是返回对象
+						res = res.data;
+//						console.log(res);
+						if(res.result === true){
+							this.tableData = res.rows;
+						}else{
+							alter(res.msg);   //显示查询错误
+						}
+					}).catch(err=>{
+						console.log(err);
+					});
 		        }
 		      },
 		    mounted: function(){
-		    	/*bug*/
-		    	
+		    	this.loadStudents();
 		      }
 }
