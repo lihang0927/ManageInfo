@@ -111,4 +111,22 @@ public class CourseController {
 		}
 	}
 	
+	//修改一个课程,比如axios请求：/course/putCourse?Course（对象）
+	@RequestMapping(value = "/putCourse", method = RequestMethod.PUT)
+	public Map<String,Object> putCourse(@RequestBody  Course course) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		try {
+			Course c = courseRepo.save(course);
+			map.put("result", true);
+			map.put("rows", c);
+			map.put("result", true);
+			map.put("msg","修改课程成功!");
+			return map;
+		}catch(Exception e) {
+			map.put("result", false);
+			map.put("msg","修改课程失败!");
+			return map;
+		}
+	}
+	
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.studentmanage.ManageInfo.model.Classes;
 import com.studentmanage.ManageInfo.model.CourseStudent;
 import com.studentmanage.ManageInfo.model.CourseTeacher;
 import com.studentmanage.ManageInfo.repo.CourseTeacherRepository;
@@ -91,6 +92,24 @@ public class CourseTeacherController {
 		}catch(Exception e) {
 			map.put("result", false);
 			map.put("msg","删除授课失败!");
+			return map;
+		}
+	}
+	
+	//修改授课,比如axios请求：/courseteacher/putCourseTeacher?CourseTeacher（对象）
+	@RequestMapping(value = "/putCourseTeacher", method = RequestMethod.PUT)
+	public Map<String,Object> putCourse(@RequestBody  CourseTeacher courseteacher) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		try {
+			CourseTeacher ct = courseTeacherRepo.save(courseteacher);
+			map.put("result", true);
+			map.put("rows", ct);
+			map.put("result", true);
+			map.put("msg","修改授课成功!");
+			return map;
+		}catch(Exception e) {
+			map.put("result", false);
+			map.put("msg","修改授课失败!");
 			return map;
 		}
 	}
