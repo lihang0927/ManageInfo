@@ -31,15 +31,15 @@ public class Course {
 	//构造函数
 	public Course() {
 	}
-	public Course(String name,int credit) {
-		super();
-		this.name = name;
-		this.credit = credit;
-	}
 	
 	public Long getId() {
 		return id;
+	}public Course(String name, int credit) {
+	super();
+	this.name = name;
+	this.credit = credit;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}

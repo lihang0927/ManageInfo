@@ -143,13 +143,17 @@ var student = {
 			     <el-select v-model="form.college.id" placeholder="请选择活动区域">
 			        <el-option label="计算机学院"  value="1"></el-option>
 			        <el-option label="外国语学院"  value="2"></el-option>
+			        <el-option label="土木学院"  value="3"></el-option>
+			         <el-option label="材料学院"  value="4"></el-option>
 			      </el-select>
 		    </el-form-item>
 		    
 		    <el-form-item label="所属专业" :label-width="formLabelWidth">
 				<el-select v-model="form.major.id" placeholder="请选择活动区域">
-			        <el-option label="软件"  value="1"></el-option>
-			        <el-option label="计科"  value="2"></el-option>
+			        <el-option label="软件专业"  value="1"></el-option>
+			        <el-option label="英语专业"  value="2"></el-option>
+			        <el-option label="土木专业"  value="3"></el-option>
+			        <el-option label="材料专业"  value="4"></el-option>
 			      </el-select>
 		    </el-form-item>
 			
