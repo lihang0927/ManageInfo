@@ -66,8 +66,11 @@
 					//console.log(res)
 					if(res.data.statue==200){
 						$('#myAlertSuccess').removeClass('hide').addClass('in')
+						
+						/*借助cookie 传值登陆人员信息 给main.html*/
+						document.cookie = "name="+name;
 						/*跳转页面*/
-						window.location.href='index.html';
+						window.location.href='main.html';
 					}
 					else{
 						$('#myAlertWarn').removeClass('hide').addClass('in')

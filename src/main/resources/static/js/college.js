@@ -1,7 +1,7 @@
-var teacher = {
+var College = {
 		template : `
 		<div>
-			<el-button type="primary" icon="el-icon-edit" class="addButton" @click="AddTeacher">增加老师</el-button>
+			<el-button type="primary" icon="el-icon-edit" class="addButton" @click="AddCollege">增加学院</el-button>
 			<el-table
 		    ref="filterTable"
 		    :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
@@ -14,53 +14,20 @@ var teacher = {
 		      width="55">
 		    </el-table-column>
 		    
-		     /*学号*/
+		     /*学院号*/
 		    <el-table-column
 		      prop="no"
-		      label="工号"
+		      label="学院号"
 		      width="120">
 		    </el-table-column>
 		    
-		     /*姓名*/
+		     /*学院名*/
 		    <el-table-column
 		      prop="name"
-		      label="姓名"
+		      label="学院名"
 		      width="120">
 		    </el-table-column>
 		    
-		    /*性别*/
-		    <el-table-column
-		      prop="sex"
-		      label="性别"
-		      width="120">
-		    </el-table-column>
-		    
-		    /*出生日期*/
-		    <el-table-column
-		      label="出生日期"
-		      width="120"
-		      prop="birth"
-		      column-key="birth"
-		      :filters="filtersData"
-		      :filter-method="filterHandler"
-		      filter-placement="bottom-end"
-		      >
-		      <template slot-scope="scope">{{ scope.row.birth }}</template>
-		    </el-table-column>
-		    
-		    /*学院*/
-		     <el-table-column
-		      prop="college.name"
-		      label="学院"
-		      width="120">
-		    </el-table-column>
-		    
-		     /*职称*/
-		     <el-table-column
-		      prop="position"
-		      label="职称"
-		      width="120">
-		    </el-table-column>
 		    
 		     <el-table-column
 			      align="right">
@@ -86,46 +53,11 @@ var teacher = {
 		  </el-table>
 		
 		
-		<el-dialog title="教师信息" :visible.sync="dialogFormVisible">
+		<el-dialog title="学院信息" :visible.sync="dialogFormVisible">
 		  <el-form :model="form">
-			<el-form-item label="工号" :label-width="formLabelWidth">
-		      <el-input v-model="form.no" autocomplete="off"></el-input>
-		    </el-form-item>
-		    
-		    <el-form-item label="姓名" :label-width="formLabelWidth">
+	
+		    <el-form-item label="学院名" :label-width="formLabelWidth">
 		      <el-input v-model="form.name" autocomplete="off"></el-input>
-		    </el-form-item>
-		    
-		    <el-form-item label="性别" :label-width="formLabelWidth">
-		      <el-select v-model="form.sex" placeholder="请选择性别">
-		        <el-option label="Male"  value="Male"></el-option>
-		        <el-option label="FeMale"  value="FeMale"></el-option>
-		      </el-select>
-		    </el-form-item>
-		    
-		    <el-form-item label="出生日期" :label-width="formLabelWidth">
-		    	 <el-date-picker
-			      v-model="form.birth"
-			      type="date"
-			      placeholder="选择日期">
-			    </el-date-picker>
-		    </el-form-item>
-			 
-			 <el-form-item label="所属学院" :label-width="formLabelWidth">
-			     <el-select v-model="form.college.id" placeholder="请选择所属学院">
-			        <el-option label="计算机学院"  value="1"></el-option>
-			        <el-option label="外国语学院"  value="2"></el-option>
-			        <el-option label="土木学院"  value="3"></el-option>
-			         <el-option label="材料学院"  value="4"></el-option>
-			      </el-select>
-		    </el-form-item>
-			
-			<el-form-item label="职称" :label-width="formLabelWidth">
-			     <el-select v-model="form.position" placeholder="请选择职称">
-			        <el-option label="教授"  value="1"></el-option>
-			        <el-option label="副教授"  value="2"></el-option>
-			        <el-option label="讲师"  value="3"></el-option>
-			      </el-select>
 		    </el-form-item>
 		    
 		  </el-form>
@@ -145,19 +77,14 @@ var teacher = {
 				         /*弹框是否打开*/
 				        dialogFormVisible: false,
 				        form: {
-				        	id:'',
+				        	id:'5',
 				            name: '',
-				            no: '',
-				            sex: '',
-				            birth: '',
-				            college:{'id':1},
-				            position:''
+				            no: ''
 				        },
 				        /*状态为0：修改 状态为1：添加*/
 				        status:0,
 				        formLabelWidth: '120px',
-				        filtersData:[{text: '2016-05-01', value: '2016-05-01'}, {text: '2016-05-02', value: '2016-05-02'}, {text: '2016-05-03', value: '2016-05-03'}, {text: '2016-05-04', value: '2016-05-04'}]
-				      }
+				}
 		    },
 		    methods: {
 		    	submitChange(){
@@ -167,12 +94,12 @@ var teacher = {
 		    		/*如果未添加*/
 		    		if(this.status==1){
 		    			console.log(this.form);
-		    			axios.post('/teacher/teacher',this.form).then(res=>{
+		    			axios.post('/college/college',this.form).then(res=>{
 		    				res = res.data;
 //		    				console.log(res);
 		    				if(res.result === true) {
 		    					// 成功后刷新列表
-		    					this.loadTeachers();
+		    					this.loadColleges();
 		    				}else{
 		    					  alert(res.msg);
 		    				}
@@ -183,12 +110,12 @@ var teacher = {
 		    		}
 		    		/*为修改*/
 		    		else{
-		    			axios.put('/teacher/teacher',this.form).then(res=>{
+		    			axios.put('/college/college',this.form).then(res=>{
 		    				res = res.data;
 //		    				console.log(res);
 		    				if(res.result === true) {
 		    					// 成功后刷新列表
-		    					this.loadTeachers();
+		    					this.loadColleges();
 		    				}else{
 		    					  alert(res.msg);
 		    				}
@@ -215,7 +142,7 @@ var teacher = {
 		        handleDelete(index, row) {
 		            console.log(index, row);
 		            console.log(row.id);
-		            axios.delete('/student/student/'+row.id).then(res=>{
+		            axios.delete('/college/college/'+row.id).then(res=>{
 		            	  console.log(res);
 					       res = res.data;
 					       if(res.result){
@@ -227,22 +154,19 @@ var teacher = {
 					       alert('网络请求异常，请重试!');
 					     });
 		        },
-		        AddTeacher(){
+		        AddCollege(){
 		        	 if(this.dialogFormVisible==false){
 		    			this.dialogFormVisible=true;
 		    			this.form={
-					            name: '',
-					            no: '',
-					            sex: '',
-					            birth: '',
-					            college:{'id':'','name':''},
-					            position:''
-					          };
+				        	id:'',
+				            name: '',
+				            no: ''
+				        };
 		    			this.status=1;
 			    	}
 		        },
-		        loadTeachers(){
-		        	axios.get("/teacher/allTeacher").then(res=>{ //res 是返回对象
+		        loadColleges(){
+		        	axios.get("/college/college").then(res=>{ //res 是返回对象
 						res = res.data;
 						//console.log(res);
 						if(res.result === true){
@@ -256,6 +180,6 @@ var teacher = {
 		        }
 		      },
 		    mounted: function(){
-		    	this.loadTeachers();
+		    	this.loadColleges();
 		      }
 }

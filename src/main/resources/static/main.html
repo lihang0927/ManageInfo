@@ -6,9 +6,9 @@
 <link rel="stylesheet"
 	href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 <!-- 引入组件库 -->
+<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
 </head>
 <body>
 	<div id="app">
@@ -23,7 +23,7 @@
 			          <el-dropdown-item>删除</el-dropdown-item>
 			        </el-dropdown-menu>
 			      </el-dropdown>
-     			 <span id="UserMsg">王小虎</span>
+     			 <span id="UserMsg">{{UserName}}</span>
 			</el-header> 
 			<el-container>
 				<el-aside width="200px"> 
@@ -45,12 +45,16 @@
 									<el-menu-item index="teacher"> 
 										<i class="el-icon-menu"></i> 
 										<span slot="title">教师管理</span> </el-menu-item> 
-									<el-menu-item index="class"> 
+									<el-menu-item index="Course"> 
 										<i class="el-icon-document"></i> 
 										<span slot="title">课程管理</span> </el-menu-item> 
 									<el-menu-item index="teachClass"> 
 										<i class="el-icon-setting"></i>
 										<span slot="title">授课管理</span> 
+									</el-menu-item> 
+									<el-menu-item index="College"> 
+										<i class="el-icon-setting"></i>
+										<span slot="title">学院管理</span> 
 									</el-menu-item> 
 									<el-menu-item index="Score"> 
 										<i class="el-icon-setting"></i>
@@ -78,8 +82,10 @@
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <link rel="stylesheet" href="css/dialog.css">
-<script src="js/teacher.js"></script>
 <script src="js/stu.js"></script>
+<script src="js/teacher.js"></script>
+<script src="js/college.js"></script>
+<script src="js/course.js"></script>
 <script>
     var componentB={
         template:`<div style="color:green">我是 componentB</div>`
@@ -92,12 +98,15 @@
       el: '#app',
       data(){
     	  return {
-    		  who:'student'
+    		  who:'student',
+    		  UserName:''
     	  }
       },
       components:{
     	'student':student,
-    	'teacher':componentB
+    	'teacher':teacher,
+    	'College':College,
+    	'Course':Course
       },
       methods: {
           handleOpen(key, keyPath) {
@@ -107,17 +116,35 @@
             console.log(key, keyPath);
           },
           handleSelect(key,keyPath){
-        	 /*获取 跳转的value*/
-        	  switch(keyPath['0']){
-        		  case 'student':this.who='student';break;
-        		  case 'teacher':this.who='teacher';break;
-        	  }
+        	  /*获取 跳转的value*/
+        	  this.who=keyPath['0'];
+        	  //console.log(keyPath['0']);
+        	  //console.log(this.who);
           }
         },
       mounted(){
         	document.getElementById("app").style.height=window.innerHeight+"px";
         	document.querySelector(".el-container").style.height=window.innerHeight+"px";
         	document.querySelector(".el-footer").style.height="30px";
+        	
+        	/*借助cookie 获取登陆人员信息*/
+        	var name=getCookie("name");
+			name=name.split('@');
+			this.UserName=name[0];
+			
+			 function getCookie(cname)
+		        {
+		            var ss = document.cookie;
+		            var name = cname + "=";
+		            var ca = document.cookie.split(';');
+		            for(var i=0; i<ca.length; i++)
+		            {
+		                var c = ca[i].trim();
+		                if (c.indexOf(name)==0)
+		                    return c.substring(name.length,c.length);
+		            }
+		            return "";
+		        }
         }
     })
   </script>

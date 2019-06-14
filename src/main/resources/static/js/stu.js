@@ -223,7 +223,19 @@ var student = {
 		    		}
 		    		/*为修改*/
 		    		else{
-		    			
+		    			axios.put('/student/student',this.form).then(res=>{
+		    				res = res.data;
+//		    				console.log(res);
+		    				if(res.result === true) {
+		    					// 成功后刷新列表
+		    					this.loadStudents();
+		    				}else{
+		    					  alert(res.msg);
+		    				}
+		    			}).catch(err=>{
+		    				console.error(err);
+		    				alert(res.msg);
+		    			});
 		    		}
 		    	},
 		        handleSelectionChange(val) {
@@ -274,8 +286,9 @@ var student = {
 		        },
 		        loadStudents(){
 		        	axios.get("/student/student").then(res=>{ //res 是返回对象
+		        		//console.log(res);
 						res = res.data;
-						console.log(res);
+						//console.log(res);
 						if(res.result === true){
 							this.tableData = res.rows;
 						}else{
