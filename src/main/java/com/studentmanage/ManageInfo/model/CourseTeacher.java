@@ -16,10 +16,10 @@ public class CourseTeacher {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)//实现id自增长
 	Long id;
 
-	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false)
+	@ManyToOne()
 	Teacher teacher;
 	
-	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false)
+	@ManyToOne()
 	Course course;
 	
 	public CourseTeacher() {super();}

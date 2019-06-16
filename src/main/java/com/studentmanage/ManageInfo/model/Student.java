@@ -1,16 +1,22 @@
 package com.studentmanage.ManageInfo.model;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.HashSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="student")
@@ -49,6 +55,17 @@ public class Student {
   	@JoinColumn(name="college_id")
   	private College college;
 	
+  	@OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE},mappedBy="student")//一个学生对应多个课程成绩 
+  	@JsonIgnore
+  	private Collection<CourseStudent> courseStudents = new HashSet<CourseStudent>();
+
+	public Collection<CourseStudent> getCourseStudents() {
+		return courseStudents;
+	}
+
+	public void setCourseStudents(Collection<CourseStudent> courseStudents) {
+		this.courseStudents = courseStudents;
+	}
 
 	public Student() {
 		super();
