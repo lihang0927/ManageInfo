@@ -1,5 +1,6 @@
 package com.studentmanage.ManageInfo.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,10 +16,10 @@ public class CourseTeacher {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)//实现id自增长
 	Long id;
 
-	@ManyToOne
+	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false)
 	Teacher teacher;
 	
-	@ManyToOne
+	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false)
 	Course course;
 	
 	public CourseTeacher() {super();}

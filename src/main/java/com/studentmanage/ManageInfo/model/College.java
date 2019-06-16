@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Table(name="College")
 public class College {
 	@Id
-  	@GeneratedValue(strategy=GenerationType.IDENTITY)//实现id自增长
+	@GeneratedValue(strategy=GenerationType.IDENTITY)//实现id自增长
   	@Column(name="id")
   	private Long id; //学院id
   

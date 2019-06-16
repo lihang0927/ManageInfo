@@ -1,6 +1,8 @@
 package com.studentmanage.ManageInfo.model;
 
 import java.time.LocalDate;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,15 +16,15 @@ import javax.persistence.Table;
 @Table(name="Major")
 public class Major {
 	@Id
-  	@GeneratedValue(strategy=GenerationType.IDENTITY)//实现id自增长
+	@GeneratedValue(strategy=GenerationType.IDENTITY)//实现id自增长
   	@Column(name="id")
   	private Long id; //专业id
   
   	@Column(name="name")
   	private String name; //专业名
 
-  	@ManyToOne
-  	@JoinColumn(name="college_id",nullable=false)
+  	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false)
+  	@JoinColumn(name="college_id")
 	private College college;
   	
   	public College getCollege() {

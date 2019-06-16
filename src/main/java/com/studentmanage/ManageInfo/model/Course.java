@@ -1,5 +1,6 @@
 package com.studentmanage.ManageInfo.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,8 +25,8 @@ public class Course {
 	@Column(name="credit")
 	private int credit;
 	
-	@ManyToOne
-	@JoinColumn(name="college_id",nullable=false)
+	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false)
+	@JoinColumn(name="college_id")
 	private College college;
 	
 	//构造函数

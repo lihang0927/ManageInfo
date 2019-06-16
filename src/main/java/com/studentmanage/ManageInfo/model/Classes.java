@@ -1,5 +1,6 @@
 package com.studentmanage.ManageInfo.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +21,7 @@ public class Classes {
 	@Column(name="name")
 	private String name;
 	
-	@ManyToOne
+	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false)
 	private Major major;
 	
 	public Classes() {

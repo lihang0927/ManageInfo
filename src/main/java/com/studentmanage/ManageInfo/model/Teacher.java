@@ -1,6 +1,8 @@
 package com.studentmanage.ManageInfo.model;
 
 import java.time.LocalDate;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,8 +29,8 @@ public class Teacher {
   	@Column(name="birth")
   	private String birth; //老师出生
   	
-  	@ManyToOne
-  	@JoinColumn(name="college_id",nullable=false)
+  	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false)
+  	@JoinColumn(name="college_id")
 	private College college;
   	
   	public College getCollege() {
