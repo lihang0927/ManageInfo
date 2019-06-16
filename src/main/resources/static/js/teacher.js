@@ -109,10 +109,6 @@ var teacher = {
 			    </el-date-picker>
 		    </el-form-item>
 			 
-<<<<<<< HEAD
-			 <el-form-item label="所属学院" :label-width="formLabelWidth">
-			     <el-select v-model="form.college.name" placeholder="请选择所属学院">
-=======
 			<el-form-item label="职称" :label-width="formLabelWidth">
 			     <el-select v-model="form.position" placeholder="请选择职称">
 			        <el-option label="教授"  value="教授"></el-option>
@@ -123,24 +119,12 @@ var teacher = {
 			 
 			<el-form-item label="所属学院" :label-width="formLabelWidth">
 			     <el-select v-model="form.college.id" placeholder="请选择所属学院">
->>>>>>> 64dacd483ad0a3fd6f8ac401c7cb586006c77eaf
 			        <el-option label="计算机学院"  value="1"></el-option>
 			        <el-option label="外国语学院"  value="2"></el-option>
 			        <el-option label="土木学院"  value="3"></el-option>
 			         <el-option label="材料学院"  value="4"></el-option>
 			      </el-select>
 		    </el-form-item>
-<<<<<<< HEAD
-			
-			<el-form-item label="职称" :label-width="formLabelWidth">
-			     <el-select v-model="form.position" placeholder="请选择职称">
-			        <el-option label="教授"  value="教授"></el-option>
-			        <el-option label="副教授"  value="副教授"></el-option>
-			        <el-option label="讲师"  value="讲师"></el-option>
-			      </el-select>
-		    </el-form-item>
-=======
->>>>>>> 64dacd483ad0a3fd6f8ac401c7cb586006c77eaf
 		    
 		  </el-form>
 		  <div slot="footer" class="dialog-footer">
