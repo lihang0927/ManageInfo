@@ -1,6 +1,7 @@
 package com.studentmanage.ManageInfo.model;
 
-import java.time.LocalDate;
+import java.util.Collection;
+import java.util.HashSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,7 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="Teacher")
@@ -32,11 +36,23 @@ public class Teacher {
   	@Column(name="birth")
   	private String birth; //老师出生
   	
-  	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false)
+  	@ManyToOne
   	@JoinColumn(name="college_id")
 	private College college;
   	
-  	public College getCollege() {
+  	@OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE},mappedBy="teacher")
+	@JsonIgnore
+  	private Collection<CourseTeacher> courseteachers = new HashSet<CourseTeacher>();
+  	
+  	public Collection<CourseTeacher> getCourseteachers() {
+		return courseteachers;
+	}
+
+	public void setCourseteachers(Collection<CourseTeacher> courseteachers) {
+		this.courseteachers = courseteachers;
+	}
+
+	public College getCollege() {
 		return college;
 	}
 
