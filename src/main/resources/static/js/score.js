@@ -93,7 +93,7 @@ var Score = {
 
 			
 		<el-form-item label="课程" :label-width="formLabelWidth">
-		     <el-select v-model="form.course.name" placeholder="请选择课程">
+		     <el-select v-model="form.course.id" placeholder="请选择课程">
 		        <el-option label="数据结构"  value="1"></el-option>
 		        <el-option label="数据库"  value="2"></el-option>
 		        <el-option label="C语言"  value="3"></el-option>
