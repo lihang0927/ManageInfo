@@ -100,7 +100,7 @@ var teachClass = {
 		    </el-form-item>
 		    
 		    <el-form-item label="教师所属学院" :label-width="formLabelWidth">
-			     <el-select v-model="form.teacher.college.id" placeholder="请选择所属学院">
+			     <el-select v-model="form.teacher.college.name" placeholder="请选择所属学院">
 			        <el-option label="计算机学院"  value="1"></el-option>
 			        <el-option label="外国语学院"  value="2"></el-option>
 			        <el-option label="土木学院"  value="3"></el-option>
@@ -122,7 +122,7 @@ var teachClass = {
 		    </el-form-item>
 		    
 		    <el-form-item label="课程所属学院" :label-width="formLabelWidth">
-			     <el-select v-model="form.course.college.id" placeholder="请选择所属学院">
+			     <el-select v-model="form.course.college.name" placeholder="请选择所属学院">
 			        <el-option label="计算机学院"  value="1"></el-option>
 			        <el-option label="外国语学院"  value="2"></el-option>
 			        <el-option label="土木学院"  value="3"></el-option>
