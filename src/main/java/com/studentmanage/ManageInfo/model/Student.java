@@ -26,7 +26,6 @@ public class Student {
   	@Column(name="name")
   	private String name; //学生姓名
   
-  
   	@Column(name="sex")
   	private String sex; //学生性别
   	
@@ -56,9 +55,8 @@ public class Student {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Student(Long id, String no, String name, String sex, LocalDate birth, String grade,String phone,String address) {
+	public Student(String no, String name, String sex, LocalDate birth, String grade,String phone,String address) {
 		super();
-		this.id = id;
 		this.no = no;
 		this.name = name;
 		this.sex = sex;
