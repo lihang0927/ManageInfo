@@ -23,6 +23,9 @@ public class Teacher {
   	@Column(name="name")
   	private String name; //老师名
 
+  	@Column(name="sex")
+  	private String sex; //老师性别
+  	
   	@Column(name="position")
   	private String position; //老师职称
   	
@@ -46,12 +49,21 @@ public class Teacher {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Teacher(Long id, String name, String position, String birth) {
+	public Teacher(Long id, String name, String position, String birth,String sex) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.position = position;
 		this.birth = birth;
+		this.sex = sex;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
 	}
 
 	public Long getId() {
