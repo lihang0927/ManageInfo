@@ -60,6 +60,10 @@
 										<i class="el-icon-setting"></i>
 										<span slot="title">成绩管理</span> 
 									</el-menu-item> 
+									<el-menu-item index="Class"> 
+										<i class="el-icon-setting"></i>
+										<span slot="title">班级管理</span> 
+									</el-menu-item> 
 								</el-menu> 
 						</el-col> 
 					</el-row> 
@@ -88,6 +92,7 @@
 <script src="js/course.js"></script>
 <script src="js/teachClass.js"></script>
 <script src="js/Score.js"></script>
+<script src="js/class.js"></script>
 <script>
     var componentB={
         template:`<div style="color:green">我是 componentB</div>`
@@ -110,7 +115,8 @@
     	'College':College,
     	'Course':Course,
     	'teachClass':teachClass,
-    	'Score':Score
+    	'Score':Score,
+    	'Class':Class
       },
       methods: {
           handleOpen(key, keyPath) {

@@ -96,7 +96,7 @@ public class ClassesController {
 	}
 		
 	//删除一个课程,比如axios请求：/classes/deleteClasses/1
-	@RequestMapping(value = "/deleteCourse/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/deleteClasses/{id}", method = RequestMethod.DELETE)
 	public Map<String,Object> delClassesById(@PathVariable Long id) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		try {
