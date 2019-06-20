@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!-- import CSS -->
 <link rel="stylesheet"
-	href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	href="css/theme/index.css">
 <!-- 引入组件库 -->
 <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
@@ -31,13 +31,7 @@
 						<el-col> 
 							<el-menu default-active="student"
 							@select="handleSelect"
-							class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
-							background-color="#D3DCE6" text-color="#333"
-							active-text-color="#B3C0D1"> 
-									<el-menu-item index="mainMenu">
-										<i class="el-icon-menu"></i> 
-										<span slot="title">主页</span> 
-									</el-menu-item>
+							class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"> 
 									<el-menu-item index="student">
 										<i class="el-icon-menu"></i> 
 										<span slot="title">学生管理</span> 
@@ -64,7 +58,10 @@
 										<i class="el-icon-setting"></i>
 										<span slot="title">班级管理</span> 
 									</el-menu-item> 
-									
+									<el-menu-item index="Major"> 
+										<i class="el-icon-setting"></i>
+										<span slot="title">专业管理</span> 
+									</el-menu-item> 
 								</el-menu> 
 						</el-col> 
 					</el-row> 
@@ -92,8 +89,9 @@
 <script src="js/college.js"></script>
 <script src="js/course.js"></script>
 <script src="js/teachClass.js"></script>
-<script src="js/Score.js"></script>
+<script src="js/score.js"></script>
 <script src="js/class.js"></script>
+<script src="js/major.js"></script>
 <script>
     var componentB={
         template:`<div style="color:green">我是 componentB</div>`
@@ -117,7 +115,8 @@
     	'Course':Course,
     	'teachClass':teachClass,
     	'Score':Score,
-    	'Class':Class
+    	'Class':Class,
+    	'Major':Major
       },
       methods: {
           handleOpen(key, keyPath) {
@@ -166,33 +165,44 @@
 	height:100%;
 }
 .el-header {
-	background-color: #B3C0D1;
-	color: #333;
-	
+	background-color: #333;
+	color: #fff;
 	line-height: 60px;
 }
 
 .el-footer{
-	background-color: #B3C0D1;
-	color: #333;
+	background-color: #333;
+	color: #fff;
 	text-align: center;
 	line-height: 30px;
 }
 
 .el-aside {
-	background-color: #D3DCE6;
-	color: #333;
+	background-color: #333;
+	color: #fff;
 	text-align: center;
 	line-height: 200px;
 }
 
 .el-main {
-	background-color: #E9EEF3;
+	background-color: #fff;
 	color: #333;
 	text-align: center;
 	line-height: 160px;
 }
 
+.el-menu{
+	background-color: #333;
+	color: #fff;
+}
+
+.el-menu-item{
+	color:	#B8B8B8;
+}
+
+.el-menu-item.is-active{
+	color:#409EFF;
+}
 body>.el-container {
 	margin-bottom: 40px;
 }

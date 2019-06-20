@@ -15,6 +15,13 @@ INSERT INTO STUDENT(ID,phone,address,birth,grade,name,no,sex,college_id,major_id
 INSERT INTO STUDENT(ID,phone,address,birth,grade,name,no,sex,college_id,major_id) VALUES(2,'18728533333','四川省绵阳市2','1998-02-16','2016','liuliang','512016002','Male',2,2);
 INSERT INTO STUDENT(ID,phone,address,birth,grade,name,no,sex,college_id,major_id) VALUES(3,'18728534444','四川省绵阳市3','1998-10-20','2016','liaojiajun','512016003','Male',3,3);
 INSERT INTO STUDENT(ID,phone,address,birth,grade,name,no,sex,college_id,major_id) VALUES(4,'18728535555','四川省绵阳市4','1998-06-30','2016','zhousiyi','512016004','Female',4,4);
+
+INSERT INTO STUDENT(ID,phone,address,birth,grade,name,no,sex,college_id,major_id) VALUES(5,'18728532224','四川省绵阳市1','1997-08-24','2016','lihang','512016001','Male',1,1);
+INSERT INTO STUDENT(ID,phone,address,birth,grade,name,no,sex,college_id,major_id) VALUES(6,'18728533334','四川省绵阳市2','1998-02-16','2016','liuliang','512016002','Male',2,2);
+INSERT INTO STUDENT(ID,phone,address,birth,grade,name,no,sex,college_id,major_id) VALUES(7,'18728534445','四川省绵阳市3','1998-10-20','2016','liaojiajun','512016003','Male',3,3);
+INSERT INTO STUDENT(ID,phone,address,birth,grade,name,no,sex,college_id,major_id) VALUES(8,'18728535556','四川省绵阳市4','1998-06-30','2016','zhousiyi','512016004','Female',4,4);
+
+
 INSERT INTO TEACHER(ID,name,college_id,birth,position) VALUES(1,'刘亮',1,'1997-08-24','教授');
 INSERT INTO TEACHER(ID,name,college_id,birth,position) VALUES(2,'周思艺',2,'1998-02-16','副教授');
 INSERT INTO TEACHER(ID,name,college_id,birth,position) VALUES(3,'李航',3,'1998-10-20','教授父亲');

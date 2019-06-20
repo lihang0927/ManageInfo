@@ -1,7 +1,7 @@
-var Score = {
+var Major = {
 		template : `
 		<div>
-			<el-button type="primary" icon="el-icon-edit" class="addButton" @click="AddStudent">增加选修</el-button>
+			<el-button type="primary" icon="el-icon-edit" class="addButton" @click="AddMajor">增加专业</el-button>
 			<el-table
 		    ref="filterTable"
 		    :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
@@ -14,45 +14,24 @@ var Score = {
 		      width="55">
 		    </el-table-column>
 		    
-		     /*选修id*/
+		     /*专业号*/
 		    <el-table-column
 		      prop="id"
-		      label="选修id"
+		      label="专业号"
 		      width="120">
 		    </el-table-column>
 		    
-		     /*课程名*/
+		     /*专业名*/
 		    <el-table-column
-		      prop="course.name"
-		      label="课程名"
+		      prop="name"
+		      label="专业名"
 		      width="120">
 		    </el-table-column>
 		    
-		    /*开课学院*/
+		    /*学院*/
 		    <el-table-column
-		      prop="course.college.name"
-		      label="开课学院"
-		      width="120">
-		    </el-table-column>
-		    
-		    /*学生学号*/
-		    <el-table-column
-		      prop="student.no"
-		      label="学生学号"
-		      width="120">
-		    </el-table-column>
-		    
-		    /*学生姓名*/
-		    <el-table-column
-		      prop="student.name"
-		      label="学生姓名"
-		      width="120">
-		    </el-table-column>
-		    
-		     /*分数 */
-		     <el-table-column
-		      prop="score"
-		      label="分数"
+		      prop="college.name"
+		      label="学院"
 		      width="120">
 		    </el-table-column>
 		    
@@ -79,39 +58,18 @@ var Score = {
 			  
 		  </el-table>
 		
-		<el-pagination
-		  :hide-on-single-page="hidevalue"
-	      @size-change="handleSizeChange"
-	      @current-change="handleCurrentChange"
-	      :current-page="currentPage"
-	      :page-size="5"
-	      background
-	      layout="total, sizes, prev, pager, next, jumper"
-	      :total="allnum">
-	    </el-pagination>
 		
-		<el-dialog title="选修信息" :visible.sync="dialogFormVisible">
+		<el-dialog title="专业信息" :visible.sync="dialogFormVisible">
 		  <el-form :model="form">
-		  
-		<el-form-item label="学号" :label-width="formLabelWidth">
-	      <el-input v-model="form.student.no" autocomplete="off"></el-input>
-	    </el-form-item>
-	    
-	    <el-form-item label="姓名" :label-width="formLabelWidth">
-	      <el-input v-model="form.student.name" autocomplete="off"></el-input>
-	    </el-form-item>
-
-			
-		<el-form-item label="课程" :label-width="formLabelWidth">
-		     <el-select v-model="form.course.id" placeholder="请选择课程">
-		        <el-option label="数据结构"  value="1"></el-option>
-		        <el-option label="数据库"  value="2"></el-option>
-		        <el-option label="C语言"  value="3"></el-option>
-		      </el-select>
-	    </el-form-item>
+	
+		    <el-form-item label="专业名" :label-width="formLabelWidth">
+		      <el-input v-model="form.name" autocomplete="off"></el-input>
+		    </el-form-item>
 		    
-	    <el-form-item label="分数" :label-width="formLabelWidth">
-		      <el-input v-model="form.score" autocomplete="off"></el-input>
+		    <el-form-item label="所属学院" :label-width="formLabelWidth">
+			     <el-select v-model="form.college.id" placeholder="请选择学院">
+			        <el-option v-for="(item,index) in collegeData" :key="item.value" :label="item.name"  v-bind:value="item.id"></el-option>
+			      </el-select>
 		    </el-form-item>
 		    
 		  </el-form>
@@ -126,25 +84,20 @@ var Score = {
 			 data: function(){
 				 return {
 					 tableData: [],
+					 collegeData:[],
 				        multipleSelection: [],
 				        search: '',
-				        /*分页是否打开*/
-				        hidevalue:false,
-				        currentPage:1,
-				        allnum:4,
 				         /*弹框是否打开*/
 				        dialogFormVisible: false,
 				        form: {
 				        	id:'',
-				            score: '',
-				            course:{'id':1,'name':''},
-				            student:{'id':1,'no':'','name':''}
+				            name: '',
+				            college:{'id':1},
 				        },
 				        /*状态为0：修改 状态为1：添加*/
 				        status:0,
 				        formLabelWidth: '120px',
-				        filtersData:[{text: '2016-05-01', value: '2016-05-01'}, {text: '2016-05-02', value: '2016-05-02'}, {text: '2016-05-03', value: '2016-05-03'}, {text: '2016-05-04', value: '2016-05-04'}]
-				      }
+				}
 		    },
 		    methods: {
 		    	submitChange(){
@@ -154,12 +107,12 @@ var Score = {
 		    		/*如果未添加*/
 		    		if(this.status==1){
 		    			console.log(this.form);
-		    			axios.post('/coursestudent/addCourseStudent',this.form).then(res=>{
+		    			axios.post('/major/major',this.form).then(res=>{
 		    				res = res.data;
 //		    				console.log(res);
 		    				if(res.result === true) {
 		    					// 成功后刷新列表
-		    					this.loadCourseStudents();
+		    					this.loadMajors();
 		    				}else{
 		    					  alert(res.msg);
 		    				}
@@ -170,12 +123,12 @@ var Score = {
 		    		}
 		    		/*为修改*/
 		    		else{
-		    			axios.put('/coursestudent/putCourseStudent',this.form).then(res=>{
+		    			axios.put('/major/major',this.form).then(res=>{
 		    				res = res.data;
 //		    				console.log(res);
 		    				if(res.result === true) {
 		    					// 成功后刷新列表
-		    					this.loadCourseStudents();
+		    					this.loadMajors();
 		    				}else{
 		    					  alert(res.msg);
 		    				}
@@ -197,16 +150,18 @@ var Score = {
 		            if(this.dialogFormVisible==false){
 		    			this.dialogFormVisible=true;
 		    			this.form=this.tableData[index];
+		    			
+		    			this.loadColleges();
 		    		}
 		        },
 		        handleDelete(index, row) {
 		            console.log(index, row);
 		            console.log(row.id);
-		            axios.delete('/coursestudent/deleteCourseStudent/'+row.id).then(res=>{
+		            axios.delete('/major/major/'+row.id).then(res=>{
 		            	  console.log(res);
 					       res = res.data;
 					       if(res.result){
-					         this.loadCourseStudents();
+					         this.loadMajors();
 					       }
 					       alert(res.msg);   //显示提示信息
 					     }).catch(err=>{
@@ -214,27 +169,38 @@ var Score = {
 					       alert('网络请求异常，请重试!');
 					     });
 		        },
-		        AddStudent(){
+		        AddMajor(){
 		        	 if(this.dialogFormVisible==false){
 		    			this.dialogFormVisible=true;
 		    			this.form={
-					        	id:'',
-					            score: '',
-					            course:{'id':1,'name':''},
-					            student:{'id':1,'no':'','name':''}
-					          };
+				        	id:'',
+				            name: '',
+				            college:{'id':'','name':''}
+				        };
 		    			this.status=1;
 			    	}
 		        },
-		        loadCourseStudents(){
-		        	axios.get("/coursestudent/allCourseStudent").then(res=>{ //res 是返回对象
-		        		//console.log(res);
+		        loadMajors(){
+		        	axios.get("/major/major").then(res=>{ //res 是返回对象
 						res = res.data;
 						//console.log(res);
 						if(res.result === true){
 							this.tableData = res.rows;
-							//console.log(res.rows);
-//							this.allnum= res.rows.length;
+						}else{
+							alter(res.msg);   //显示查询错误
+						}
+					}).catch(err=>{
+						console.log(err);
+					});
+		        },
+		        /*查询学院信息 更新添加*/
+		        loadColleges(){
+		        	axios.get("/college/college").then(res=>{ //res 是返回对象
+						res = res.data;
+						
+						if(res.result === true){
+							this.collegeData = res.rows;
+//							console.log(this.collegeData);
 						}else{
 							alter(res.msg);   //显示查询错误
 						}
@@ -244,10 +210,6 @@ var Score = {
 		        }
 		      },
 		    mounted: function(){
-		    	console.log("in");
-		    	this.loadCourseStudents();
-		    },
-		    created:function(){
-		    	console.log("creats");
-		    }
+		    	this.loadMajors();
+		      }
 }

@@ -4,7 +4,9 @@ var student = {
 			<el-button type="primary" icon="el-icon-edit" class="addButton" @click="AddStudent">增加学生</el-button>
 			<el-table
 		    ref="filterTable"
-		    :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+		     border
+		     stripe
+		    :data="pageData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
 		    tooltip-effect="dark"
 		    style="width: 100%"
 		    @selection-change="handleSelectionChange">
@@ -16,6 +18,7 @@ var student = {
 		    
 		     /*学号*/
 		    <el-table-column
+		      fixed="left"
 		      prop="no"
 		      label="学号"
 		      width="120">
@@ -23,6 +26,7 @@ var student = {
 		    
 		     /*姓名*/
 		    <el-table-column
+		      fixed="left"
 		      prop="name"
 		      label="姓名"
 		      width="120">
@@ -54,13 +58,13 @@ var student = {
 		      label="入学年份"
 		      width="120">
 		    </el-table-column>
-		    
-		     /*联系电话*/
-		    <el-table-column
-		      prop="phone"
-		      label="联系电话"
-		      width="120">
-		    </el-table-column>
+//		    
+//		     /*联系电话*/
+//		    <el-table-column
+//		      prop="phone"
+//		      label="联系电话"
+//		      width="120">
+//		    </el-table-column>
 		    
 		    <el-table-column
 		      prop="address"
@@ -83,6 +87,7 @@ var student = {
 		    </el-table-column>
 		    
 		     <el-table-column
+		     	  fixed="right"
 			      align="right">
 			      <template slot="header" slot-scope="scope">
 			        <el-input
@@ -104,7 +109,18 @@ var student = {
 			  <el-button type="text" ></el-button>
 			  
 		  </el-table>
+		  
 		
+	    
+	    <el-pagination
+	      @size-change="handleSizeChange"
+	      @current-change="handleCurrentChange"
+	      :current-page.sync="currentPage"
+	      :page-size="pagesize"
+	       background
+	      layout="total,prev, pager, next, jumper"
+	      :total="allnum">
+	    </el-pagination>
 		
 		<el-dialog title="学生信息" :visible.sync="dialogFormVisible">
 		  <el-form :model="form">
@@ -140,20 +156,14 @@ var student = {
 			</el-form-item>
 			 
 			 <el-form-item label="所属学院" :label-width="formLabelWidth">
-			     <el-select v-model="form.college.id" placeholder="请选择活动区域">
-			        <el-option label="计算机学院"  value="1"></el-option>
-			        <el-option label="外国语学院"  value="2"></el-option>
-			        <el-option label="土木学院"  value="3"></el-option>
-			         <el-option label="材料学院"  value="4"></el-option>
+			     <el-select v-model="form.college.id" placeholder="请选择学院">
+			        <el-option v-for="(item,index) in collegeData" :key="item.value" :label="item.name"  v-bind:value="item.id"></el-option>
 			      </el-select>
 		    </el-form-item>
 		    
 		    <el-form-item label="所属专业" :label-width="formLabelWidth">
-				<el-select v-model="form.major.id" placeholder="请选择活动区域">
-			        <el-option label="软件专业"  value="1"></el-option>
-			        <el-option label="英语专业"  value="2"></el-option>
-			        <el-option label="土木专业"  value="3"></el-option>
-			        <el-option label="材料专业"  value="4"></el-option>
+				<el-select v-model="form.major.id" placeholder="请选择专业">
+			        <el-option v-for="(item,index) in majorData" :key="item.value" :label="item.name"  v-bind:value="item.id"></el-option>
 			      </el-select>
 		    </el-form-item>
 			
@@ -177,7 +187,16 @@ var student = {
 			 data: function(){
 				 return {
 					 tableData: [],
+					 pageData:[],
+					 collegeData:[],
+					 majorData:[],
 				        multipleSelection: [],
+				        /*分页是否打开*/
+				        hidevalue:false,
+				        currentPage:1,
+				        allnum:4,
+				        /*每一页的数量*/
+				        pagesize:5,
 				        search: '',
 				         /*弹框是否打开*/
 				        dialogFormVisible: false,
@@ -249,7 +268,11 @@ var student = {
 		            //console.log(index, row);
 		            if(this.dialogFormVisible==false){
 		    			this.dialogFormVisible=true;
-		    			this.form=this.tableData[index];
+		    			this.form=this.pageData[index];
+		    			
+		    			/*加载学院、专业信息 动态显示*/
+		    			this.loadColleges();
+		    			this.loadMajors();
 		    		}
 		        },
 		        handleDelete(index, row) {
@@ -266,6 +289,17 @@ var student = {
 					       console.log(err);
 					       alert('网络请求异常，请重试!');
 					     });
+		        },
+		        handleSizeChange(val){
+		        	console.log(val);
+		        },
+		        /*页面修改数据*/
+		        handleCurrentChange(val){
+//		        	console.log(val);
+		        	/*开始数据 页数*每一页的数量*/
+		        	let st=this.pagesize*(val-1);
+		        	let et=st+this.pagesize;
+		        	this.pageData=this.tableData.slice(st,et);
 		        },
 		        AddStudent(){
 		        	 if(this.dialogFormVisible==false){
@@ -288,9 +322,42 @@ var student = {
 		        	axios.get("/student/student").then(res=>{ //res 是返回对象
 		        		//console.log(res);
 						res = res.data;
-						//console.log(res);
+						var returnData=res.rows;
+						var len=returnData.length;
+						
 						if(res.result === true){
 							this.tableData = res.rows;
+							/*修改表格显示数据 与总的页数*/
+							this.pageData=this.tableData.slice(1,this.pagesize);
+							this.allnum=len;
+						}else{
+							alter(res.msg);   //显示查询错误
+						}
+					}).catch(err=>{
+						console.log(err);
+					});
+		        },
+		        /*查询学院信息 更新添加*/
+		        loadColleges(){
+		        	axios.get("/college/college").then(res=>{ //res 是返回对象
+						res = res.data;
+						
+						if(res.result === true){
+							this.collegeData = res.rows;
+						}else{
+							alter(res.msg);   //显示查询错误
+						}
+					}).catch(err=>{
+						console.log(err);
+					});
+		        },
+		        /*查询专业信息 更新添加*/
+		        loadMajors(){
+		        	axios.get("/major/major").then(res=>{ //res 是返回对象
+						res = res.data;
+						//console.log(res);
+						if(res.result === true){
+							this.majorData = res.rows;
 						}else{
 							alter(res.msg);   //显示查询错误
 						}
