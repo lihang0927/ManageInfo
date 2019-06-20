@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.studentmanage.ManageInfo.model.Student;
@@ -70,21 +72,36 @@ public class StudentController {
 			return map;
 		}
 	}
-	//删除一个课程
+	//删除一个学生，根据学生的学号id进行删除
 	@DeleteMapping("/student/{id}")
-	public Map<String,Object> delCourseById(@PathVariable Long id) {
-		System.out.println(id);
+	public Map<String,Object> delStudentByNo(@PathVariable Long id) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		try {
 			studentRepo.deleteById(id);
 			map.put("result", true);
-			map.put("msg","成功删除了课程！");
+			map.put("msg","成功删除了学生!");
 			return map;
 		}catch(Exception e) {
 			System.out.println(e);
+			System.out.print(map);
 			map.put("result", false);
-			map.put("msg","删除课程失败!");
+			map.put("msg","删除学生失败!");
 			return map;
 	    }
+	}
+	@PutMapping("/student")//修改一个学生的信息，和添加的时候传入的参数相同
+	public Map<String,Object> editStudent(@RequestBody Student student){
+		Map<String,Object> map = new HashMap<String,Object>();
+		try {
+			Student s = studentRepo.save(student);
+			map.put("result",true);
+			map.put("student",s);
+			map.put("msg", "修改学生成功！");
+			return map;
+		}catch(Exception e) {
+			map.put("result", false);
+			map.put("msg","修改学生失败!");
+			return map;
+		}
 	}
 }
