@@ -14,9 +14,9 @@ var teacher = {
 		      width="55">
 		    </el-table-column>
 		    
-		     /*学号*/
+		     /*工号*/
 		    <el-table-column
-		      prop="no"
+		      prop="id"
 		      label="工号"
 		      width="120">
 		    </el-table-column>
@@ -48,6 +48,13 @@ var teacher = {
 		      <template slot-scope="scope">{{ scope.row.birth }}</template>
 		    </el-table-column>
 		    
+		    /*职称*/
+		     <el-table-column
+		      prop="position"
+		      label="职称"
+		      width="120">
+		    </el-table-column>
+		    
 		    /*学院*/
 		     <el-table-column
 		      prop="college.name"
@@ -55,13 +62,7 @@ var teacher = {
 		      width="120">
 		    </el-table-column>
 		    
-		     /*职称*/
-		     <el-table-column
-		      prop="position"
-		      label="职称"
-		      width="120">
-		    </el-table-column>
-		    
+		     
 		     <el-table-column
 			      align="right">
 			      <template slot="header" slot-scope="scope">
@@ -88,9 +89,6 @@ var teacher = {
 		
 		<el-dialog title="教师信息" :visible.sync="dialogFormVisible">
 		  <el-form :model="form">
-			<el-form-item label="工号" :label-width="formLabelWidth">
-		      <el-input v-model="form.no" autocomplete="off"></el-input>
-		    </el-form-item>
 		    
 		    <el-form-item label="姓名" :label-width="formLabelWidth">
 		      <el-input v-model="form.name" autocomplete="off"></el-input>
@@ -98,8 +96,8 @@ var teacher = {
 		    
 		    <el-form-item label="性别" :label-width="formLabelWidth">
 		      <el-select v-model="form.sex" placeholder="请选择性别">
-		        <el-option label="Male"  value="Male"></el-option>
-		        <el-option label="FeMale"  value="FeMale"></el-option>
+		        <el-option label="男"  value="男"></el-option>
+		        <el-option label="女"  value="女"></el-option>
 		      </el-select>
 		    </el-form-item>
 		    
@@ -110,18 +108,28 @@ var teacher = {
 			      placeholder="选择日期">
 			    </el-date-picker>
 		    </el-form-item>
+<<<<<<< HEAD
 			
 			 <el-form-item label="所属学院" :label-width="formLabelWidth">
 			     <el-select v-model="form.college.id" placeholder="请选择学院">
 			        <el-option v-for="(item,index) in collegeData" :key="item.value" :label="item.name"  v-bind:value="item.id"></el-option>
-			      </el-select>
-		    </el-form-item>
-			
+=======
+			 
 			<el-form-item label="职称" :label-width="formLabelWidth">
 			     <el-select v-model="form.position" placeholder="请选择职称">
-			        <el-option label="教授"  value="1"></el-option>
-			        <el-option label="副教授"  value="2"></el-option>
-			        <el-option label="讲师"  value="3"></el-option>
+			        <el-option label="教授"  value="教授"></el-option>
+			        <el-option label="副教授"  value="副教授"></el-option>
+			        <el-option label="讲师"  value="讲师"></el-option>
+			      </el-select>
+		    </el-form-item>
+			 
+			<el-form-item label="所属学院" :label-width="formLabelWidth">
+			     <el-select v-model="form.college.id" placeholder="请选择所属学院">
+			        <el-option label="计算机学院"  value="1"></el-option>
+			        <el-option label="外国语学院"  value="2"></el-option>
+			        <el-option label="土木学院"  value="3"></el-option>
+			         <el-option label="材料学院"  value="4"></el-option>
+>>>>>>> ad58492f5009e5cd03950e11221eedb6d833b613
 			      </el-select>
 		    </el-form-item>
 		    
@@ -145,7 +153,6 @@ var teacher = {
 				        form: {
 				        	id:'',
 				            name: '',
-				            no: '',
 				            sex: '',
 				            birth: '',
 				            college:{'id':1},
@@ -216,11 +223,11 @@ var teacher = {
 		        handleDelete(index, row) {
 		            console.log(index, row);
 		            console.log(row.id);
-		            axios.delete('/student/student/'+row.id).then(res=>{
+		            axios.delete('/teacher/teacher/'+row.id).then(res=>{
 		            	  console.log(res);
 					       res = res.data;
 					       if(res.result){
-					         this.loadStudents();
+					         this.loadTeachers();
 					       }
 					       alert(res.msg);   //显示提示信息
 					     }).catch(err=>{
@@ -233,7 +240,6 @@ var teacher = {
 		    			this.dialogFormVisible=true;
 		    			this.form={
 					            name: '',
-					            no: '',
 					            sex: '',
 					            birth: '',
 					            college:{'id':'','name':''},

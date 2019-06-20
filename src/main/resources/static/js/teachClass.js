@@ -82,53 +82,11 @@ var teachClass = {
 		    <el-form-item label="教师名" :label-width="formLabelWidth">
 		      <el-input v-model="form.teacher.name" autocomplete="off"></el-input>
 		    </el-form-item>
-		    
-		    <el-form-item label="教师职称" :label-width="formLabelWidth">
-			     <el-select v-model="form.teacher.position" placeholder="请选择教师职称">
-			        <el-option label="教授"  value="教授"></el-option>
-			        <el-option label="副教授"  value="副教授"></el-option>
-			        <el-option label="讲师"  value="讲师"></el-option>
-			      </el-select>
-		    </el-form-item>
-		    
-		    <el-form-item label="出生日期" :label-width="formLabelWidth">
-		    	 <el-date-picker
-			      v-model="form.teacher.birth"
-			      type="date"
-			      placeholder="选择日期">
-			    </el-date-picker>
-		    </el-form-item>
-		    
-		    <el-form-item label="教师所属学院" :label-width="formLabelWidth">
-			     <el-select v-model="form.teacher.college.id" placeholder="请选择所属学院">
-			        <el-option label="计算机学院"  value="1"></el-option>
-			        <el-option label="外国语学院"  value="2"></el-option>
-			        <el-option label="土木学院"  value="3"></el-option>
-			         <el-option label="材料学院"  value="4"></el-option>
-			      </el-select>
-		    </el-form-item>
-		    
+		  
 		    <el-form-item label="课程名" :label-width="formLabelWidth">
 		      <el-input v-model="form.course.name" autocomplete="off"></el-input>
 		    </el-form-item>
 		    
-		    <el-form-item label="学分" :label-width="formLabelWidth">
-			     <el-select v-model="form.course.credit" placeholder="请选择学分">
-			        <el-option label="1"  value="1"></el-option>
-			        <el-option label="2"  value="2"></el-option>
-			        <el-option label="3"  value="3"></el-option>
-			         <el-option label="4"  value="4"></el-option>
-			      </el-select>
-		    </el-form-item>
-		    
-		    <el-form-item label="课程所属学院" :label-width="formLabelWidth">
-			     <el-select v-model="form.course.college.id" placeholder="请选择所属学院">
-			        <el-option label="计算机学院"  value="1"></el-option>
-			        <el-option label="外国语学院"  value="2"></el-option>
-			        <el-option label="土木学院"  value="3"></el-option>
-			         <el-option label="材料学院"  value="4"></el-option>
-			      </el-select>
-		    </el-form-item>
 		    
 		  </el-form>
 		  <div slot="footer" class="dialog-footer">
@@ -148,8 +106,8 @@ var teachClass = {
 				        dialogFormVisible: false,
 				        form: {
 				        	id:'',
-				            teacher:{'id':'','name':'','position':'','birth':'','college':{'id':'','name':''}},
-				            course:{'id':'','name':'','credit': '','college':{'id':'','name':''}}
+				            teacher:{'id':'','name':''},
+				            course:{'id':'','name':''}
 				        },
 				        /*状态为0：修改 状态为1：添加*/
 				        status:0,
@@ -230,8 +188,8 @@ var teachClass = {
 		    			this.dialogFormVisible=true;
 		    			this.form={
 				        	id:'',
-				            teacher:{'id':'','name':'','position':'','birth':'','college':{'id':'','name':''}},
-				            course:{'id':'','name':'','credit': '','college':{'id':'','name':''}}
+				            teacher:{'id':'','name':''},
+				            course:{'id':'','name':''}
 				        };
 		    			this.status=1;
 			    	}

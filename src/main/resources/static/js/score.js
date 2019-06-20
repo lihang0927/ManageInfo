@@ -79,6 +79,7 @@ var Score = {
 			  
 		  </el-table>
 		
+<<<<<<< HEAD
 		<el-pagination
 		  :hide-on-single-page="hidevalue"
 	      @size-change="handleSizeChange"
@@ -89,6 +90,8 @@ var Score = {
 	      layout="total, sizes, prev, pager, next, jumper"
 	      :total="allnum">
 	    </el-pagination>
+=======
+>>>>>>> ad58492f5009e5cd03950e11221eedb6d833b613
 		
 		<el-dialog title="选修信息" :visible.sync="dialogFormVisible">
 		  <el-form :model="form">
@@ -128,10 +131,13 @@ var Score = {
 					 tableData: [],
 				        multipleSelection: [],
 				        search: '',
+<<<<<<< HEAD
 				        /*分页是否打开*/
 				        hidevalue:false,
 				        currentPage:1,
 				        allnum:4,
+=======
+>>>>>>> ad58492f5009e5cd03950e11221eedb6d833b613
 				         /*弹框是否打开*/
 				        dialogFormVisible: false,
 				        form: {
@@ -233,8 +239,11 @@ var Score = {
 						//console.log(res);
 						if(res.result === true){
 							this.tableData = res.rows;
+<<<<<<< HEAD
 							//console.log(res.rows);
 //							this.allnum= res.rows.length;
+=======
+>>>>>>> ad58492f5009e5cd03950e11221eedb6d833b613
 						}else{
 							alter(res.msg);   //显示查询错误
 						}
@@ -244,10 +253,15 @@ var Score = {
 		        }
 		      },
 		    mounted: function(){
+<<<<<<< HEAD
 		    	console.log("in");
 		    	this.loadCourseStudents();
 		    },
 		    created:function(){
 		    	console.log("creats");
 		    }
+=======
+		    	this.loadCourseStudents();
+		      }
+>>>>>>> ad58492f5009e5cd03950e11221eedb6d833b613
 }

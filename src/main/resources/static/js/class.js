@@ -154,13 +154,13 @@ var Class = {
 		    		}
 		        },
 		        handleDelete(index, row) {
-		            console.log(index, row);
+		            //console.log(index, row);
 		            console.log(row.id);
 		            axios.delete('/classes/deleteClasses/'+row.id).then(res=>{
 		            	  console.log(res);
 					       res = res.data;
 					       if(res.result){
-					         this.loadStudents();
+					         this.loadColleges();
 					       }
 					       alert(res.msg);   //显示提示信息
 					     }).catch(err=>{

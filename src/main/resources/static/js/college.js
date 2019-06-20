@@ -16,7 +16,7 @@ var College = {
 		    
 		     /*学院号*/
 		    <el-table-column
-		      prop="no"
+		      prop="id"
 		      label="学院号"
 		      width="120">
 		    </el-table-column>
@@ -79,7 +79,6 @@ var College = {
 				        form: {
 				        	id:'5',
 				            name: '',
-				            no: ''
 				        },
 				        /*状态为0：修改 状态为1：添加*/
 				        status:0,
@@ -146,7 +145,7 @@ var College = {
 		            	  console.log(res);
 					       res = res.data;
 					       if(res.result){
-					         this.loadStudents();
+					         this.loadColleges();
 					       }
 					       alert(res.msg);   //显示提示信息
 					     }).catch(err=>{
@@ -160,7 +159,6 @@ var College = {
 		    			this.form={
 				        	id:'',
 				            name: '',
-				            no: ''
 				        };
 		    			this.status=1;
 			    	}

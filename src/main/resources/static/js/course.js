@@ -1,7 +1,7 @@
 var Course = {
 		template : `
 		<div>
-			<el-button type="primary" icon="el-icon-edit" class="addButton" @click="AddCourse">增加学院</el-button>
+			<el-button type="primary" icon="el-icon-edit" class="addButton" @click="AddCourse">增加课程</el-button>
 			<el-table
 		    ref="filterTable"
 		    :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
@@ -16,7 +16,7 @@ var Course = {
 		    
 		     /*课程号*/
 		    <el-table-column
-		      prop="credit"
+		      prop="id"
 		      label="课程号"
 		      width="120">
 		    </el-table-column>
