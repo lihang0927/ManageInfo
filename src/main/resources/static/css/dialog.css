@@ -1,0 +1,11 @@
+.el-dialog__header{
+	height:50px;
+}
+
+.el-dialog__footer{
+	height:120px;
+}
+
+.el-button,.addButton,.el-button--primary,.el-button--primary{
+	float:right;
+}

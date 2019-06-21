@@ -40,8 +40,7 @@ public class StudentController {
 			  return map;
 	    }
 	}
-	@GetMapping("/student/{no}")
-	//根据学生学号获取一个学生的信息http://localhost:8080/student/student/512016001
+	@GetMapping("/student/{no}")//根据学生学号获取一个学生的信息http://localhost:8080/student/student/512016001
 	public Map<String,Object> getCourseById(@PathVariable String no){
 		  Map<String,Object> map = new HashMap<String,Object>();
 		    try {
@@ -58,7 +57,6 @@ public class StudentController {
 	}
 	@PostMapping("/student")//添加一个学生的信息
 	public Map<String,Object> addStudent(@RequestBody Student student){
-		System.out.println(student.getNo());
 		Map<String,Object> map = new HashMap<String,Object>();
 		try {
 			Student s = studentRepo.save(student);
@@ -82,7 +80,6 @@ public class StudentController {
 			map.put("msg","成功删除了学生!");
 			return map;
 		}catch(Exception e) {
-			System.out.println(e);
 			System.out.print(map);
 			map.put("result", false);
 			map.put("msg","删除学生失败!");

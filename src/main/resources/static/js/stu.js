@@ -225,7 +225,7 @@ var student = {
 
 		    		/*如果未添加*/
 		    		if(this.status==1){
-		    			console.log(this.form);
+		    			/*加载学院、专业信息 动态显示*/
 		    			axios.post('/student/student',this.form).then(res=>{
 		    				res = res.data;
 //		    				console.log(res);
@@ -314,8 +314,10 @@ var student = {
 					            address:'',
 					            college:{'id':'','name':''},
 					            major:{'id':'',name:'','college':{'id':'',name:''}}
-					          };
+					    };
 		    			this.status=1;
+		    			this.loadColleges();
+		    			this.loadMajors();
 			    	}
 		        },
 		        loadStudents(){
@@ -328,8 +330,10 @@ var student = {
 						if(res.result === true){
 							this.tableData = res.rows;
 							/*修改表格显示数据 与总的页数*/
-							this.pageData=this.tableData.slice(1,this.pagesize);
+							this.pageData=this.tableData.slice(0,Math.min(this.pagesize,len+1));
 							this.allnum=len;
+//							console.log(this.tableData);
+//							console.log(this.pageData);
 						}else{
 							alter(res.msg);   //显示查询错误
 						}

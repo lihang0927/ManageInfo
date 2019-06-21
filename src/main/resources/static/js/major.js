@@ -67,18 +67,12 @@ var Major = {
 		    </el-form-item>
 		    
 		    <el-form-item label="所属学院" :label-width="formLabelWidth">
-<<<<<<< HEAD
-			     <el-select v-model="form.college.id" placeholder="请选择学院">
-			        <el-option v-for="(item,index) in collegeData" :key="item.value" :label="item.name"  v-bind:value="item.id"></el-option>
-			      </el-select>
-=======
 		      <el-select v-model="form.college.id" placeholder="请选择活动区域">
 			       <el-option label="计算机学院"  value="1"></el-option>
 			       <el-option label="外国语学院"  value="2"></el-option>
 			       <el-option label="土木学院"  value="3"></el-option>
 			       <el-option label="材料学院"  value="4"></el-option>
 			  </el-select>
->>>>>>> ad58492f5009e5cd03950e11221eedb6d833b613
 		    </el-form-item>
 		    
 		  </el-form>
@@ -93,10 +87,6 @@ var Major = {
 			 data: function(){
 				 return {
 					 tableData: [],
-<<<<<<< HEAD
-					 collegeData:[],
-=======
->>>>>>> ad58492f5009e5cd03950e11221eedb6d833b613
 				        multipleSelection: [],
 				        search: '',
 				         /*弹框是否打开*/
@@ -162,11 +152,6 @@ var Major = {
 		            if(this.dialogFormVisible==false){
 		    			this.dialogFormVisible=true;
 		    			this.form=this.tableData[index];
-<<<<<<< HEAD
-		    			
-		    			this.loadColleges();
-=======
->>>>>>> ad58492f5009e5cd03950e11221eedb6d833b613
 		    		}
 		        },
 		        handleDelete(index, row) {
@@ -207,24 +192,6 @@ var Major = {
 					}).catch(err=>{
 						console.log(err);
 					});
-<<<<<<< HEAD
-		        },
-		        /*查询学院信息 更新添加*/
-		        loadColleges(){
-		        	axios.get("/college/college").then(res=>{ //res 是返回对象
-						res = res.data;
-						
-						if(res.result === true){
-							this.collegeData = res.rows;
-//							console.log(this.collegeData);
-						}else{
-							alter(res.msg);   //显示查询错误
-						}
-					}).catch(err=>{
-						console.log(err);
-					});
-=======
->>>>>>> ad58492f5009e5cd03950e11221eedb6d833b613
 		        }
 		      },
 		    mounted: function(){

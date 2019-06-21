@@ -1,5 +1,6 @@
 package com.studentmanage.ManageInfo.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,11 +16,13 @@ public class CourseStudent {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	private Float score;
-	@ManyToOne
+	
+	@ManyToOne()
 	Course course;
 	
-	@ManyToOne
+	@ManyToOne()
 	Student student;
+	
 	
 	public Student getStudent() {
 		return student;
@@ -28,8 +31,9 @@ public class CourseStudent {
 		this.student = student;
 	}
 	public CourseStudent() {super();}
-	public CourseStudent(Course course,Student student) {
+	public CourseStudent(Float score, Course course, Student student) {
 		super();
+		this.score = score;
 		this.course = course;
 		this.student = student;
 	}

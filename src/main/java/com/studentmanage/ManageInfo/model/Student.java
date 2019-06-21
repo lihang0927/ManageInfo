@@ -1,20 +1,28 @@
 package com.studentmanage.ManageInfo.model;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.HashSet;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="student")
 public class Student {
 	@Id
-  	@GeneratedValue(strategy=GenerationType.IDENTITY)//实现id自增长
+	@GeneratedValue(strategy=GenerationType.IDENTITY)//实现id自增长
   	@Column(name="id")
   	private Long id; //学生id
   
@@ -39,14 +47,25 @@ public class Student {
   	@Column(name="grade")
 	private String grade; //学生年级
   
-  	@ManyToOne
-  	@JoinColumn(name="major_id",nullable=false)
+  	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false)
+  	@JoinColumn(name="major_id")
   	private Major major;
 	
-  	@ManyToOne
-  	@JoinColumn(name="college_id",nullable=false)
+  	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false)
+  	@JoinColumn(name="college_id")
   	private College college;
 	
+  	@OneToMany(cascade={CascadeType.PERSIST,CascadeType.REMOVE},mappedBy="student")//一个学生对应多个课程成绩 
+  	@JsonIgnore
+  	private Collection<CourseStudent> courseStudents = new HashSet<CourseStudent>();
+
+	public Collection<CourseStudent> getCourseStudents() {
+		return courseStudents;
+	}
+
+	public void setCourseStudents(Collection<CourseStudent> courseStudents) {
+		this.courseStudents = courseStudents;
+	}
 
 	public Student() {
 		super();
