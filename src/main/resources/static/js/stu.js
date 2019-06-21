@@ -156,13 +156,13 @@ var student = {
 			</el-form-item>
 			 
 			 <el-form-item label="所属学院" :label-width="formLabelWidth">
-			     <el-select v-model="form.college.id" placeholder="请选择学院">
+			     <el-select v-model="form.college.id" placeholder="请选择学院" @change="collegeChange">
 			        <el-option v-for="(item,index) in collegeData" :key="item.value" :label="item.name"  v-bind:value="item.id"></el-option>
 			      </el-select>
 		    </el-form-item>
 		    
 		    <el-form-item label="所属专业" :label-width="formLabelWidth">
-				<el-select v-model="form.major.id" placeholder="请选择专业">
+				<el-select v-model="form.major.id" placeholder="请选择专业" >
 			        <el-option v-for="(item,index) in majorData" :key="item.value" :label="item.name"  v-bind:value="item.id"></el-option>
 			      </el-select>
 		    </el-form-item>
@@ -174,6 +174,14 @@ var student = {
 		    <el-form-item label="联系地址" :label-width="formLabelWidth">
 		      <el-input v-model="form.address" autocomplete="off"></el-input>
 		    </el-form-item>
+		    
+//		    <el-form-item label="级联测试" :label-width="formLabelWidth">
+//		    	<el-cascader
+//				    v-model="value"
+//				    :options="options"
+//				    :props="{ expandTrigger: 'hover' }"
+//				    @change="handleChange"></el-cascader>
+//		    </el-form-item>
 		    
 		  </el-form>
 		  <div slot="footer" class="dialog-footer">
@@ -215,8 +223,9 @@ var student = {
 				        /*状态为0：修改 状态为1：添加*/
 				        status:0,
 				        formLabelWidth: '120px',
-				        filtersData:[{text: '2016-05-01', value: '2016-05-01'}, {text: '2016-05-02', value: '2016-05-02'}, {text: '2016-05-03', value: '2016-05-03'}, {text: '2016-05-04', value: '2016-05-04'}]
-				      }
+				        filtersData:[{text: '2016-05-01', value: '2016-05-01'}, {text: '2016-05-02', value: '2016-05-02'}, {text: '2016-05-03', value: '2016-05-03'}, {text: '2016-05-04', value: '2016-05-04'}],
+				       
+				 }
 		    },
 		    methods: {
 		    	submitChange(){
@@ -290,6 +299,18 @@ var student = {
 					       alert('网络请求异常，请重试!');
 					     });
 		        },
+		        collegeChange(value){
+		        	console.log(value);
+		        	console.log(this.majorData);
+		        	var filterMajor=this.majorData.filter(function(d){
+		        		return d.college.id==value;
+		        	})
+//		        	console.log(filterMajor);
+		        	this.majorData=filterMajor
+		        },
+//		        handleChange(value) {
+//		            console.log(value);
+//		         },
 		        handleSizeChange(val){
 		        	console.log(val);
 		        },
