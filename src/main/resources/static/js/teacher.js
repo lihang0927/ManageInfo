@@ -147,6 +147,7 @@ var teacher = {
 					 pageData:[],
 					 collegeData:[],
 					 /*分页是否打开*/
+					 	pagesize:5,
 				        hidevalue:false,
 				        currentPage:1,
 				        allnum:4,
@@ -269,6 +270,8 @@ var teacher = {
 		        	axios.get("/teacher/allTeacher").then(res=>{ //res 是返回对象
 						res = res.data;
 						//console.log(res);
+						var returnData=res.rows;
+						var len=returnData.length;
 						if(res.result === true){
 							this.tableData = res.rows;
 							/*修改表格显示数据 与总的页数*/
