@@ -4,7 +4,7 @@ var Course = {
 			<el-button type="primary" icon="el-icon-edit" class="addButton" @click="AddCourse">增加课程</el-button>
 			<el-table
 		    ref="filterTable"
-		    :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+		    :data="pageData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
 		    tooltip-effect="dark"
 		    style="width: 100%"
 		    @selection-change="handleSelectionChange">
@@ -58,6 +58,15 @@ var Course = {
 			  
 		  </el-table>
 		
+		 <el-pagination
+	     
+	      @current-change="handleCurrentChange"
+	      :current-page.sync="currentPage"
+	      :page-size="pagesize"
+	       background
+	      layout="total,prev, pager, next, jumper"
+	      :total="allnum">
+	    </el-pagination>
 		
 		<el-dialog title="课程信息" :visible.sync="dialogFormVisible">
 		  <el-form :model="form">
@@ -87,7 +96,13 @@ var Course = {
 			 data: function(){
 				 return {
 					 tableData: [],
+					 pageData:[],
 				        multipleSelection: [],
+				        hidevalue:false,
+				        currentPage:1,
+				        allnum:4,
+				        /*每一页的数量*/
+				        pagesize:5,
 				        search: '',
 				         /*弹框是否打开*/
 				        dialogFormVisible: false,
@@ -152,8 +167,16 @@ var Course = {
 		            //console.log(index, row);
 		            if(this.dialogFormVisible==false){
 		    			this.dialogFormVisible=true;
-		    			this.form=this.tableData[index];
+		    			this.form=this.pageData[index];
 		    		}
+		        },
+		        /*页面修改数据*/
+		        handleCurrentChange(val){
+//		        	console.log(val);
+		        	/*开始数据 页数*每一页的数量*/
+		        	let st=this.pagesize*(val-1);
+		        	let et=st+this.pagesize;
+		        	this.pageData=this.tableData.slice(st,et);
 		        },
 		        handleDelete(index, row) {
 		            console.log(index, row);
@@ -163,6 +186,15 @@ var Course = {
 					       res = res.data;
 					       if(res.result){
 					         this.loadCourse();
+					         
+					         if(res.result){
+						         this.loadCourse();
+						         this.$notify({
+						             title: '成功',
+						             message: '成功删除课程',
+						             type: 'success'
+						           });
+						       }
 					       }
 					       alert(res.msg);   //显示提示信息
 					     }).catch(err=>{
@@ -186,8 +218,14 @@ var Course = {
 		        	axios.get("/course/allCourse").then(res=>{ //res 是返回对象
 						res = res.data;
 						console.log(res);
+						var returnData=res.rows;
+						var len=returnData.length;
 						if(res.result === true){
 							this.tableData = res.rows;
+							
+							/*修改表格显示数据 与总的页数*/
+							this.pageData=this.tableData.slice(0,Math.min(this.pagesize,len+1));
+							this.allnum=len;
 						}else{
 							alter(res.msg);   //显示查询错误
 						}

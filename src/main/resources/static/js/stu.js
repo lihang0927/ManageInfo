@@ -175,13 +175,6 @@ var student = {
 		      <el-input v-model="form.address" autocomplete="off"></el-input>
 		    </el-form-item>
 		    
-//		    <el-form-item label="级联测试" :label-width="formLabelWidth">
-//		    	<el-cascader
-//				    v-model="value"
-//				    :options="options"
-//				    :props="{ expandTrigger: 'hover' }"
-//				    @change="handleChange"></el-cascader>
-//		    </el-form-item>
 		    
 		  </el-form>
 		  <div slot="footer" class="dialog-footer">
@@ -204,7 +197,7 @@ var student = {
 				        currentPage:1,
 				        allnum:4,
 				        /*每一页的数量*/
-				        pagesize:5,
+				        pagesize:3,
 				        search: '',
 				         /*弹框是否打开*/
 				        dialogFormVisible: false,
@@ -292,8 +285,12 @@ var student = {
 					       res = res.data;
 					       if(res.result){
 					         this.loadStudents();
+					         this.$notify({
+					             title: '成功',
+					             message: '成功删除学生',
+					             type: 'success'
+					           });
 					       }
-					       alert(res.msg);   //显示提示信息
 					     }).catch(err=>{
 					       console.log(err);
 					       alert('网络请求异常，请重试!');

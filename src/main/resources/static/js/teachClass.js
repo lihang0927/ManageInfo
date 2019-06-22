@@ -4,7 +4,7 @@ var teachClass = {
 			<el-button type="primary" icon="el-icon-edit" class="addButton" @click="AddCourseTeacher">增加授课</el-button>
 			<el-table
 		    ref="filterTable"
-		    :data="tableData.filter(data => !search || data.teacher.name.toLowerCase().includes(search.toLowerCase()))"
+		    :data="pageData.filter(data => !search || data.teacher.name.toLowerCase().includes(search.toLowerCase()))"
 		    tooltip-effect="dark"
 		    style="width: 100%"
 		    @selection-change="handleSelectionChange">
@@ -75,6 +75,15 @@ var teachClass = {
 			  
 		  </el-table>
 		
+		  <el-pagination
+	      @size-change="handleSizeChange"
+	      @current-change="handleCurrentChange"
+	      :current-page.sync="currentPage"
+	      :page-size="pagesize"
+	       background
+	      layout="total,prev, pager, next, jumper"
+	      :total="allnum">
+	    </el-pagination>
 		
 		<el-dialog title="授课信息" :visible.sync="dialogFormVisible">
 		  <el-form :model="form">
@@ -100,7 +109,14 @@ var teachClass = {
 			 data: function(){
 				 return {
 					 tableData: [],
+					 pageData:[],
 				        multipleSelection: [],
+				        /*分页是否打开*/
+				        hidevalue:false,
+				        currentPage:1,
+				        allnum:4,
+				        /*每一页的数量*/
+				        pagesize:5,
 				        search: '',
 				         /*弹框是否打开*/
 				        dialogFormVisible: false,
@@ -176,12 +192,30 @@ var teachClass = {
 					       res = res.data;
 					       if(res.result){
 					         this.loadCourseTeacher();
+					         
+					         if(res.result){
+						         this.loadStudents();
+						         this.$notify({
+						             title: '成功',
+						             message: '成功删除授课',
+						             type: 'success'
+						           });
+						       }
+					         
 					       }
-					       alert(res.msg);   //显示提示信息
+//					       alert(res.msg);   //显示提示信息
 					     }).catch(err=>{
 					       console.log(err);
 					       alert('网络请求异常，请重试!');
 					     });
+		        },
+		        /*页面修改数据*/
+		        handleCurrentChange(val){
+//		        	console.log(val);
+		        	/*开始数据 页数*每一页的数量*/
+		        	let st=this.pagesize*(val-1);
+		        	let et=st+this.pagesize;
+		        	this.pageData=this.tableData.slice(st,et);
 		        },
 		        AddCourseTeacher(){
 		        	 if(this.dialogFormVisible==false){
@@ -198,8 +232,16 @@ var teachClass = {
 		        	axios.get("/courseteacher/allCourseTeacher").then(res=>{ //res 是返回对象
 						res = res.data;
 						console.log(res);
+						
+						var returnData=res.rows;
+						var len=returnData.length;
+						
 						if(res.result === true){
 							this.tableData = res.rows;
+							
+							/*修改表格显示数据 与总的页数*/
+							this.pageData=this.tableData.slice(0,Math.min(this.pagesize,len+1));
+							this.allnum=len;
 						}else{
 							alter(res.msg);   //显示查询错误
 						}

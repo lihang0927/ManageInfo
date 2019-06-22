@@ -4,7 +4,7 @@ var teacher = {
 			<el-button type="primary" icon="el-icon-edit" class="addButton" @click="AddTeacher">增加老师</el-button>
 			<el-table
 		    ref="filterTable"
-		    :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+		    :data="pageData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
 		    tooltip-effect="dark"
 		    style="width: 100%"
 		    @selection-change="handleSelectionChange">
@@ -146,12 +146,14 @@ var teacher = {
 					 tableData: [],
 					 pageData:[],
 					 collegeData:[],
-					 /*分页是否打开*/
-					 	pagesize:5,
+					 majorData:[],
+				        multipleSelection: [],
+				        /*分页是否打开*/
 				        hidevalue:false,
 				        currentPage:1,
 				        allnum:4,
-				        multipleSelection: [],
+				        /*每一页的数量*/
+				        pagesize:5,
 				        search: '',
 				         /*弹框是否打开*/
 				        dialogFormVisible: false,
@@ -244,8 +246,17 @@ var teacher = {
 					       res = res.data;
 					       if(res.result){
 					         this.loadTeachers();
+					         
+					         if(res.result){
+						         this.loadTeachers();
+						         this.$notify({
+						             title: '成功',
+						             message: '成功删除教师',
+						             type: 'success'
+						           });
+						       }
 					       }
-					       alert(res.msg);   //显示提示信息
+					     
 					     }).catch(err=>{
 					       console.log(err);
 					       alert('网络请求异常，请重试!');
